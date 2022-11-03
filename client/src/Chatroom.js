@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { createConsumer } from "@rails/actioncable"
 const consumer = createConsumer()
+const consumer1 = createConsumer()
 
 function ChatRoom({user}) {
 
   const [messages, setMessages] = useState([])
+  const [messages1, setMessages1] = useState([])
   const [messageInput, setMessageInput] = useState('')
   const [channel, setChannel] = useState(null)
 
@@ -18,7 +20,7 @@ function ChatRoom({user}) {
 
   useEffect(() => {
     if (user) {
-      const newChannel = consumer.subscriptions.create({ channel: "ChatChannel", room: "Breakfast Club" },
+      const newChannel = consumer.subscriptions.create({ channel: "ChatChannel", room: "Plumbing" },
       {
         received: (data) => {
           setMessages(oldMessages => [...oldMessages, data])
@@ -31,6 +33,7 @@ function ChatRoom({user}) {
     
   }, [user])
 
+
   function handleMessageInputChange(e) {
     setMessageInput(e.target.value)
   }
@@ -41,10 +44,11 @@ function ChatRoom({user}) {
     setMessageInput('')
   }
 
+  console.log(consumer.subscriptions)
   return (
     <div>
 
-      <h3>Cat Chat Room:</h3>
+      <h3>{user.first_name}</h3>
 
       {messages.map((message, i) => <p key={i}>{message.content} - {message.created_at}</p>)}
 

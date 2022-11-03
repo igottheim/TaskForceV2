@@ -2,7 +2,8 @@ class ChatChannel < ApplicationCable::Channel
 
   def subscribed
     stream_from "chat_#{params[:room]}"
-    ActionCable.server.broadcast("chat_#{params[:room]}", { content: "#{current_user.name} has entered the #{params[:room]}" })
+    ActionCable.server.broadcast("chat_#{params[:room]}", { content: "#{current_user.first_name} has entered the #{params[:room]}" })
+
   end
 
   def receive(data)
@@ -11,7 +12,7 @@ class ChatChannel < ApplicationCable::Channel
   end
 
   def unsubscribed
-    ActionCable.server.broadcast("chat_#{params[:room]}", { content: "#{current_user.name} has left the #{params[:room]}" })
+    ActionCable.server.broadcast("chat_#{params[:room]}", { content: "#{current_user.first_name} has left the #{params[:room]}" })
   end
 
 end

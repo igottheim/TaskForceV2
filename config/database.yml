@@ -81,6 +81,7 @@ test:
 #
 production:
   <<: *default
+  url: <%= ENV['DATABASE_URL'] %>
   database: TasForceV2_production
   username: TasForceV2
   password: <%= ENV["TASFORCEV2_DATABASE_PASSWORD"] %>

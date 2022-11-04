@@ -5,10 +5,10 @@ class MessagesController < ApplicationController
         render json: Message.all
       end
 
-  #  def create
-  #       message = Message.create!(content: params[:content])
-  #       render json: message, status: :created
-  #   end
+   def create
+        message = Message.create!(content: params[:content])
+        render json: message, status: :created
+    end
 
       
 

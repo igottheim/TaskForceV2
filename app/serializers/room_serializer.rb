@@ -1,3 +1,5 @@
 class RoomSerializer < ActiveModel::Serializer
-  attributes :id, :name, :topic
+  attributes :id, :category_id
+
+  belongs_to :category
 end

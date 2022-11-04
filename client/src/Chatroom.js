@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import { createConsumer } from "@rails/actioncable"
 const consumer = createConsumer()
-const consumer1 = createConsumer()
 
-function ChatRoom({user}) {
+
+function ChatRoom({user, rooms}) {
 
   const [messages, setMessages] = useState([])
   const [messages1, setMessages1] = useState([])
   const [messageInput, setMessageInput] = useState('')
   const [channel, setChannel] = useState(null)
   const [errors, setErrors] = useState([]);
+  
+
+  // console.log(rooms[0].category.name)
 
   useEffect(() => {
     if (user) {
@@ -19,11 +22,25 @@ function ChatRoom({user}) {
     }
   }, [user])
 
+
+
+
   useEffect(() => {
     if (user) {
-      const newChannel = consumer.subscriptions.create({ channel: "ChatChannel", room: "Plumbing" },
+      const newChannel = consumer.subscriptions.create({ channel: "ChatChannel", room: `${rooms.category.name}` },
       {
         received: (data) => {
+          // if state.currentUser === data.user_id !== 1 && data.event_type === 'enter'
+          // do something based on this
+          if (data.event_type === "message")
+          {
+            console.log("hello")
+          }
+          else
+          {
+            console.log("goodbye")
+          }
+          // console.log(data)
           setMessages(oldMessages => [...oldMessages, data])
         }
       })
@@ -33,6 +50,8 @@ function ChatRoom({user}) {
     }
     
   }, [user])
+
+
 
 
   function handleMessageInputChange(e) {
@@ -62,15 +81,16 @@ function ChatRoom({user}) {
 
 
   }
+  // messages.map((message) => console.log(message.user.first_name))
 
-  console.log(consumer.subscriptions)
   return (
     <div>
 
       <h3>{user.first_name}</h3>
+    <div className ="center-col">
+      {messages.map((message, i) => <p key={i}> {message.user_id}: {message.content} - {message.created_at}</p>)}
 
-      {messages.map((message, i) => <p key={i}>{message.content} - {message.created_at}</p>)}
-
+      </div>
       <form onSubmit={handleSubmit}>
 
         <input type="text" value={messageInput} onChange={handleMessageInputChange} />

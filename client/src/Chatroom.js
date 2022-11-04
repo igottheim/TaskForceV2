@@ -9,6 +9,7 @@ function ChatRoom({user}) {
   const [messages1, setMessages1] = useState([])
   const [messageInput, setMessageInput] = useState('')
   const [channel, setChannel] = useState(null)
+  const [errors, setErrors] = useState([]);
 
   useEffect(() => {
     if (user) {
@@ -42,6 +43,24 @@ function ChatRoom({user}) {
     e.preventDefault()
     channel.send({content: messageInput})
     setMessageInput('')
+
+
+    fetch("/messages", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ content: messageInput }),
+    }).then((r) => {
+      if (r.ok) {
+        r.json().then((e) => console.log(e))
+      }
+      else {
+        r.json().then((err) => setErrors(err.errors));
+      }
+    });
+
+
   }
 
   console.log(consumer.subscriptions)

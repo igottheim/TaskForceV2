@@ -3,6 +3,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Login from "./Login";
 import NavBar from "./NavBar";
 import ChatRoom from "./Chatroom";
+import SignUp from "./Signup";
 
 function App() {
   // const [users, setUsers] = useState([]);
@@ -40,9 +41,13 @@ function App() {
           </Switch>
            ) : (
           <Switch>
+            {/* <Route path="/signup">
+          <SignUp setCurrentUser = {setCurrentUser}></SignUp>
+          </Route> */}
           <Route path="/">
           <Login setCurrentUser = {setCurrentUser}></Login>
           </Route>
+
         </Switch>
            )}
       </div>

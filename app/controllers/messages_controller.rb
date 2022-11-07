@@ -5,12 +5,14 @@ class MessagesController < ApplicationController
         render json: Message.all
       end
 
-   def create
-        message = Message.create!(content: params[:content])
-        render json: message, status: :created
-    end
+  #  def create
+  #       message = Message.create!(content: params[:content], user_id: cookies.encrypted[:user_id])
+  #       byebug
+  #       render json: message, status: :created
+  #   end
 
       
+
 
 
 
@@ -21,7 +23,7 @@ def record_invalid(invalid)
 end
 
 def message_params
-  params.permit(:content)
+  params.permit(:content, :user_id)
 end
 
 

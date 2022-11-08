@@ -5,25 +5,21 @@ class MessagesController < ApplicationController
         render json: Message.all
       end
 
-  #  def create
-  #       message = Message.create!(content: params[:content], user_id: cookies.encrypted[:user_id])
-  #       byebug
-  #       render json: message, status: :created
-  #   end
+   def create
+   
+        message = Message.create!(content: params[:content], user_id: cookies.encrypted[:user_id], category_id: params[:category_id])
+        render json: message, status: :created
+        puts message
+    end
 
       
-
-
-
-
 private
 def record_invalid(invalid)
-
   render json: {errors: invalid.record.errors.full_messages}, status: :not_found
 end
 
 def message_params
-  params.permit(:content, :user_id)
+  params.permit(:content, :user_id, :category_id)
 end
 
 

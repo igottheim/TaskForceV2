@@ -5,31 +5,40 @@ import NavBar from "./NavBar";
 // import ChatRoom from "./Chatroom";
 import SignUp from "./Signup";
 import { createConsumer } from "@rails/actioncable"
+import { ActionCableProvider } from "./actioncable";
 const consumer = createConsumer()
 
 
-function ChatRoom({user, rooms }) {
+function ChatRoom({user, rooms, users1 }) {
   
   const [messages, setMessages] = useState([])
   const [messageInput, setMessageInput] = useState('')
   const [channel, setChannel] = useState(null)
   const [currentRoom, setCurrentRoom] = useState(null)
   const [liveUsers, setLiveUsers] = useState([])
+  const [errors, setErrors] = useState([]);
 
 
+console.log(users1)
 
+
+    
   useEffect(() => {
-    if (user) {
-      const newChannel = consumer.subscriptions.create({ channel: "ChatChannel", room: `${rooms.category.name}`, category: `${rooms.category_id}` },
+    if (user.id) {
+      const newChannel = consumer.subscriptions.create({ channel: "ChatChannel", room: rooms.category.name, category: rooms.category_id, user_id: user.id },
       {
         received: (data) => {
           // if state.currentUser === data.user_id !== 1 && data.event_type === 'enter'
           // do something based on this
           if (data.event_type === "message")
           {
-         
-            setMessages(oldMessages => [...oldMessages, data.content])
-           
+            let search = users1.filter((a)=>a.id === data.content.user_id)
+            console.log(users1)
+            setMessages((oldMessages) => [...oldMessages, {...data.content, user: search[0]}])
+        
+            
+          
+
           }
           else if (data.event_type === "enter" && data.user_id !== user.id)
           {
@@ -47,12 +56,17 @@ function ChatRoom({user, rooms }) {
          
           }
     
-         
         }
-      })
+      }, [user.id])
 
       setChannel(newChannel)
-      return ()=> newChannel.unsubscribe()
+
+      return function cleanup()
+      {
+        console.log("unsubscribing ")
+        newChannel.unsubscribe()
+      }
+  
      
     }
     
@@ -77,24 +91,24 @@ function ChatRoom({user, rooms }) {
   }
 
   useEffect(() => {
-    if (user) {
+   
       fetch('/messages')
       .then(res => res.json())
       .then(messages => setMessages(messages))
-    }
-  }, [user])
+  }, [])
+
 
   
-
+  console.log(messages)
   let messages1 = messages.filter((message)=> message.category_id === rooms.category_id)
-  
+
 
   return (
     <div>
 
       <h3>{user.first_name}</h3>
     <div className ="center-col">
-      {messages1.map((message, i) => <p key={i}> {message.user_id}: {message.content} - {message.created_at} - {message.category_id}</p>)}
+      {messages1.map((message, i) => <p key={i}> {message.user.first_name}: {message.content} - {message.created_at} - {message.category_id}</p>)}
       
 
       </div>
@@ -120,6 +134,9 @@ function App() {
     const [chat4Open, setChat4Open] = useState(null)
   const [rooms, setRooms] = useState([])
   const [messages, setMessages] = useState([])
+  const [username, setUsername] = useState("");
+  const [errors, setErrors] = useState([]);
+  const [users1, setUsers1] = useState([])
 
   useEffect(() => {
     // auto-login
@@ -130,6 +147,15 @@ function App() {
     });
   }, []);
 
+  useEffect(()=>{
+
+    fetch('/users')
+    .then(res => res.json())
+    .then(users => {
+      setUsers1(users)
+    })
+  }, [])
+
 
   useEffect(() => {
    
@@ -139,34 +165,76 @@ function App() {
 }, [setCurrentUser])
 
 
+function deleteUser(e)
+{
+  console.log(e)
+  fetch(`/users/${e.id}`,
+      {
+        method: "DELETE"
+      })
+   setCurrentUser(null)
+}
+
+function handleUserChange(e) {
+  e.preventDefault();
+ console.log(e.target[0].value)
+ console.log(username)
+  fetch(`/users/${user.id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      username
+    }),
+  }).then((r) => {
+    if (r.ok) {
+      r.json().then((user) => setCurrentUser(user))
+      alert(`Username Changed to ${username}!`)
+    }
+    else {
+      r.json().then((err) => setErrors(err.error));
+      alert("Username blank or already in use!!!")
+    }
+  });
+}
+
 
   return (
+
+    
     <BrowserRouter>
       <div className="App">
       <NavBar user={user} setUser = {setCurrentUser} />
       {user ? (
         <Switch>
           <Route path="/testing">
-      <button type="button" onClick={() => {
+          <form onSubmit={handleUserChange}>
+        <h1>Change Your Username!</h1>
+        <label htmlFor="username">Username</label>
+        <input
+          type="text"
+          id="username"
+          autoComplete="off"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <button className = "div1"  type="submit">👟👟 Submit New Username 👟👟</button>
+      </form>    
       
-      
-      setChatOpen(prev => !prev)
-      // setCurrentRoom(rooms[0])
-
-      
-      
-      }}>{chatOpen ? "Close JavaScript Chat" : "Open Javascript Chat"}</button>
+      <button className = "div1" onClick = {()=>deleteUser(user)} >Delete User</button>
+      <button type="button" onClick={() => {setChatOpen(prev => !prev)}}>{chatOpen ? "Close JavaScript Chat" : "Open Javascript Chat"}</button>
       <button type="button" onClick={() => setChat2Open(prev => !prev)}>{chat2Open ? "Close ReactJS Chat" : "Open ReactJS Chat"}</button>
       <button type="button" onClick={() => setChat3Open(prev => !prev)}>{chat3Open ? "Close Ruby Chat" : "Open Ruby Chat"}</button>
       <button type="button" onClick={() => setChat4Open(prev => !prev)}>{chat4Open ? "Close Rails Chat" : "Open Rails Chat"}</button>
       {chatOpen ? <h1 user={user} /> : null}  
-      {chatOpen ? <ChatRoom rooms = {rooms[0]} messages = {messages} user={user} /> : null}  
+      {chatOpen ? <ChatRoom users1 = {users1} rooms = {rooms[0]} messages = {messages} user={user} /> : null}  
       {chat2Open ? <h1 user={user} /> : null}  
-      {chat2Open ? <ChatRoom rooms = {rooms[1]} messages = {messages} user={user} /> : null}  
+      {chat2Open ? <ChatRoom users1 = {users1} rooms = {rooms[1]} messages = {messages} user={user} /> : null}  
       {chat3Open ? <h1 user={user} /> : null}  
-      {chat3Open ? <ChatRoom rooms = {rooms[2]} messages = {messages} user={user} /> : null}  
+      {chat3Open ? <ChatRoom users1 = {users1} rooms = {rooms[2]} messages = {messages} user={user} /> : null}  
       {chat4Open ? <h1 user={user} /> : null}  
-      {chat4Open ? <ChatRoom rooms = {rooms[3]} messages = {messages} user={user} /> : null}  
+      {chat4Open ? <ChatRoom users1 = {users1} rooms = {rooms[3]} messages = {messages} user={user} /> : null}  
           </Route>
           </Switch>
            ) : (
@@ -183,6 +251,7 @@ function App() {
       </div>
 
     </BrowserRouter>
+   
   );
 }
 

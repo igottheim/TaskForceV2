@@ -1,7 +1,7 @@
 import React, { useState, } from "react";
 
   
-function SignUp({ setCurrentUser}) {
+function SignUp({ setCurrentUser, setUsers}) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [first_name, setFirstName] = useState("");
@@ -27,7 +27,10 @@ function SignUp({ setCurrentUser}) {
       }),
     }).then((r) => {
       if (r.ok) {
-        r.json().then((user) => setCurrentUser(user))
+        r.json().then((user) => {setCurrentUser(user)
+
+        
+        })
       }
       else {
         r.json().then((err) => setErrors(err.error));

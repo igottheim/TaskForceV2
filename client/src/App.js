@@ -199,6 +199,14 @@ function handleUserChange(e) {
   });
 }
 
+function setUsers2(user)
+{
+  setCurrentUser(user)
+  setUsers1([...users1, user])
+
+}
+
+console.log(users1)
 
   return (
 

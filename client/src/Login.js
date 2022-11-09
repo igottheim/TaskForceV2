@@ -1,10 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useTransition } from "react";
+import { useParams } from "react-router-dom";
 
-function Login({ setCurrentUser }) {
+function Login({ setCurrentUser}) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
  
+
+function setCurrentUser1(user1)
+{
+
+setCurrentUser(user1)
+  
+}
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -16,7 +24,7 @@ function Login({ setCurrentUser }) {
       body: JSON.stringify({ username, password }),
     }).then((r) => {
       if (r.ok) {
-        r.json().then((user) => setCurrentUser(user));
+        r.json().then((user) => setCurrentUser1(user));
       }
       else {
         r.json().then((err) => setErrors(err.errors));

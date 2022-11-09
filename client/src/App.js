@@ -25,7 +25,7 @@ console.log(users1)
     
   useEffect(() => {
     if (user.id) {
-      const newChannel = consumer.subscriptions.create({ channel: "ChatChannel", room: rooms.category.name, category: rooms.category_id, user_id: user.id },
+      const newChannel = consumer.subscriptions.create({ channel: "ChatChannel", room: rooms.category.name, category: rooms.category_id, user_id: user.id, user:user },
       {
         received: (data) => {
           // if state.currentUser === data.user_id !== 1 && data.event_type === 'enter'
@@ -33,7 +33,8 @@ console.log(users1)
           if (data.event_type === "message")
           {
             let search = users1.filter((a)=>a.id === data.content.user_id)
-            console.log(users1)
+            console.log(search)
+            console.log(data)
             setMessages((oldMessages) => [...oldMessages, {...data.content, user: search[0]}])
         
             

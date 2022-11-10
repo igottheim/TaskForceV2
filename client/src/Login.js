@@ -1,17 +1,19 @@
-import React, { useState, useTransition } from "react";
+import React, { useState, useContext, useTransition } from "react";
 import { useParams } from "react-router-dom";
+import { useEffect, Component } from "react";
+import chatContext from './App'
 
 function Login({ setCurrentUser}) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
  
-
+  const test1 = useContext(chatContext)
+  console.log(test1)
+  
 function setCurrentUser1(user1)
 {
-
 setCurrentUser(user1)
-  
 }
 
   function handleSubmit(e) {
@@ -33,9 +35,12 @@ setCurrentUser(user1)
   }
 
   return (
+
+   
     <div className = "container">
       <form onSubmit={handleSubmit}>
         <h1>Login</h1>
+        <h1>{test1}</h1>
         <label className = "link5" htmlFor="username">Username</label>
         <input className = "link5"
           type="text"

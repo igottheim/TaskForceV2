@@ -20,7 +20,7 @@ function NavBar({ user, setUser }) {
             <>
             <Link className = "div2" to="/testing">Rooms</Link>
             <Link className = "div5" to="/rooms">Active Users</Link>
-          <button className = "div1" onClick={handleLogoutClick}>Logout</button>
+          <button  onClick={handleLogoutClick}>Logout</button>
           
           </>
         ) : (

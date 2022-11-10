@@ -12,6 +12,14 @@ class MessagesController < ApplicationController
         puts message
     end
 
+
+        
+    def destroy
+      message = Message.find(params[:id])
+      message.destroy
+      head :no_content
+  end
+
       
 private
 def record_invalid(invalid)

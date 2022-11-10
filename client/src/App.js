@@ -1,16 +1,24 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, Component } from "react";
+import './App.css';
 import { BrowserRouter, Switch, Route, useHistory } from "react-router-dom";
+import { useChat, useUpdate } from "./chatContext";
 import Login from "./Login";
 import NavBar from "./NavBar";
 // import ChatRoom from "./Chatroom";
 import SignUp from "./Signup";
 import { createConsumer } from "@rails/actioncable"
 import { ActionCableProvider } from "./actioncable";
+import { ChatProvider } from "./chatContext";
+import { ReactProvider, useChatR, useUpdateR } from "./ReactJSContext";
 const consumer = createConsumer()
 
 
+
+
+
+
 function ChatRoom({user, rooms, users1 }) {
-  
+
   const [messages, setMessages] = useState([])
   const [messageInput, setMessageInput] = useState('')
   const [channel, setChannel] = useState(null)
@@ -19,63 +27,13 @@ function ChatRoom({user, rooms, users1 }) {
   const [errors, setErrors] = useState([]);
 
 
-console.log(users1)
-
-
+// console.log(users1)
+// console.log(user)
     
-  useEffect(() => {
-    if (user.id) {
-      const newChannel = consumer.subscriptions.create({ channel: "ChatChannel", room: rooms.category.name, category: rooms.category_id, user_id: user.id, user:user },
-      {
-        received: (data) => {
-          // if state.currentUser === data.user_id !== 1 && data.event_type === 'enter'
-          // do something based on this
-          if (data.event_type === "message")
-          {
-            let search = users1.filter((a)=>a.id === data.content.user_id)
-            console.log(search)
-            console.log(data)
-            setMessages((oldMessages) => [...oldMessages, {...data.content, user: search[0]}])
-        
-            
-          
-
-          }
-          else if (data.event_type === "enter" && data.user_id !== user.id)
-          {
-           
-            console.log("entering")
-            console.log(data)
-            setMessages(oldMessages => [...oldMessages, data])
-            
-          }
-          else if (data.event_type === "exit" && data.user_id !== user.id)
-          {
-           console.log(data.user_id) 
-            console.log("goodbye")
-            setMessages(oldMessages => [...oldMessages, data])
-         
-          }
-    
-        }
-      }, [user.id])
-
-      setChannel(newChannel)
-
-      return function cleanup()
-      {
-        console.log("unsubscribing ")
-        newChannel.unsubscribe()
-      }
   
-     
-    }
-    
-  }, [user])
-
   // console.log(liveUsers)
 
-
+console.log(rooms)
 
   function handleMessageInputChange(e) {
     setMessageInput(e.target.value)
@@ -95,21 +53,81 @@ console.log(users1)
    
       fetch('/messages')
       .then(res => res.json())
-      .then(messages => setMessages(messages))
+      .then(messages => 
+        setMessages(messages.filter((m)=>m.user!==null)))
   }, [])
 
 
+
+//   useEffect(() => {
+   
+//     fetch('/rooms')
+//     .then(res => res.json())
+//     .then(room => setRooms(room))
+// }, [])
+
+
+ 
+  let messages1 = messages.filter((message)=> message.user!==null).filter((message)=> message.category_id === rooms.category_id)
   
-  console.log(messages)
-  let messages1 = messages.filter((message)=> message.category_id === rooms.category_id)
+  useEffect(() => {
+  
+    if (user.id) {
+      const newChannel = consumer.subscriptions.create({ channel: "ChatChannel", room: rooms.category.name, category: rooms.category_id, user_id: user.id, user:user },
+      {
+        received: (data) => {
+          // if state.currentUser === data.user_id !== 1 && data.event_type === 'enter'
+          // do something based on this
+          if (data.event_type === "message")
+          {
+            let search = users1.filter((a)=>a.id === data.content.user_id)
+            console.log(data)
+            console.log(users1)
+            // console.log(data)
+          
+            setMessages((oldMessages) => [...oldMessages, {...data.content, user: search[0]}])
+        
+          }
+          else if (data.event_type === "enter" && data.user_id !== user.id)
+          {
+           
+            console.log("entering")
+            console.log(data)
+            console.log(users1)
+            // setMessages(oldMessages => [...oldMessages, data])
+            
+          }
+          else if (data.event_type === "exit" && data.user_id !== user.id)
+          {
+           console.log(data.user_id) 
+            console.log("goodbye")
+            // setMessages(oldMessages => [...oldMessages, data])
+         
+          }
+    
+        }
+      }, [user.id])
+
+      setChannel(newChannel)
+
+      return function cleanup()
+      {
+        console.log("unsubscribing ")
+        newChannel.unsubscribe()
+      }
+  
+     
+    }
+    
+  }, [user,users1])
 
 
   return (
-    <div>
+    <div >
 
-      <h3>{user.first_name}</h3>
-    <div className ="center-col">
-      {messages1.map((message, i) => <p key={i}> {message.user.first_name}: {message.content} - {message.created_at} - {message.category_id}</p>)}
+      <h3>{user.username}</h3>
+    <div className = "card">
+      {messages1.map((message, i) => <p className = "chat-app" key={i}> {message.user.username}: {message.content} - {message.date} - {message.category_id}</p>)}
       
 
       </div>
@@ -138,7 +156,13 @@ function App() {
   const [username, setUsername] = useState("");
   const [errors, setErrors] = useState([]);
   const [users1, setUsers1] = useState([])
+  const chatTheme = useChat()
+  const toggleTest = useUpdate()
 
+
+  console.log(chatTheme)
+  
+  
   useEffect(() => {
     // auto-login
     fetch("/me").then((r) => {
@@ -158,22 +182,30 @@ function App() {
   }, [])
 
 
+
+
   useEffect(() => {
    
     fetch('/rooms')
     .then(res => res.json())
     .then(room => setRooms(room))
-}, [setCurrentUser])
+}, [])
 
 
 function deleteUser(e)
 {
-  console.log(e)
+// console.log(e)
+// console.log(e.id)
+// console.log(e.messages)
+// console.log(messages)
+
   fetch(`/users/${e.id}`,
       {
         method: "DELETE"
       })
+      
    setCurrentUser(null)
+   setMessages(messages.filter((m)=>m.user.id!==e.id))
 }
 
 function handleUserChange(e) {
@@ -202,12 +234,16 @@ function handleUserChange(e) {
 
 function setUsers2(user)
 {
+  console.log(user)
   setCurrentUser(user)
   setUsers1([...users1, user])
 
 }
 
 console.log(users1)
+
+
+
 
   return (
 
@@ -228,16 +264,17 @@ console.log(users1)
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
-        <button className = "div1"  type="submit">👟👟 Submit New Username 👟👟</button>
+        <button  type="submit">👟👟 Submit New Username 👟👟</button>
       </form>    
       
-      <button className = "div1" onClick = {()=>deleteUser(user)} >Delete User</button>
-      <button type="button" onClick={() => {setChatOpen(prev => !prev)}}>{chatOpen ? "Close JavaScript Chat" : "Open Javascript Chat"}</button>
+      <button  onClick = {()=>deleteUser(user)} >Delete User</button>
+      <button type="button" onClick={toggleTest}>{chatTheme ? "Close JavaScript Chat" : "Open Javascript Chat"}</button>
       <button type="button" onClick={() => setChat2Open(prev => !prev)}>{chat2Open ? "Close ReactJS Chat" : "Open ReactJS Chat"}</button>
       <button type="button" onClick={() => setChat3Open(prev => !prev)}>{chat3Open ? "Close Ruby Chat" : "Open Ruby Chat"}</button>
       <button type="button" onClick={() => setChat4Open(prev => !prev)}>{chat4Open ? "Close Rails Chat" : "Open Rails Chat"}</button>
-      {chatOpen ? <h1 user={user} /> : null}  
-      {chatOpen ? <ChatRoom users1 = {users1} rooms = {rooms[0]} messages = {messages} user={user} /> : null}  
+    
+      {chatTheme ? <h1 user={user} /> : null}  
+      {chatTheme ? <ChatRoom users1 = {users1} rooms = {rooms[0]} messages = {messages} user={user} /> : null}  
       {chat2Open ? <h1 user={user} /> : null}  
       {chat2Open ? <ChatRoom users1 = {users1} rooms = {rooms[1]} messages = {messages} user={user} /> : null}  
       {chat3Open ? <h1 user={user} /> : null}  
@@ -249,7 +286,7 @@ console.log(users1)
            ) : (
           <Switch>
             <Route path="/signup">
-          <SignUp setCurrentUser = {setCurrentUser}></SignUp>
+          <SignUp setCurrentUser = {setUsers2}></SignUp>
           </Route>
           <Route path="/">
           <Login setCurrentUser = {setCurrentUser}></Login>
@@ -260,6 +297,7 @@ console.log(users1)
       </div>
 
     </BrowserRouter>
+   
    
   );
 }

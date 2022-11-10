@@ -38,7 +38,7 @@
             def destroy
                 user = User.find(params[:id])
                 puts "#{user.messages}"
-                user.messages.destroy
+                user.messages.destroy_all
                 user.destroy
                 cookies.encrypted[:user_id] = "" 
         

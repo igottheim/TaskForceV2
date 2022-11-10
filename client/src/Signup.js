@@ -1,5 +1,5 @@
 import React, { useState, } from "react";
-
+import { useChat } from "./chatContext";
   
 function SignUp({ setCurrentUser, setUsers}) {
   const [username, setUsername] = useState("");
@@ -8,7 +8,10 @@ function SignUp({ setCurrentUser, setUsers}) {
   const [last_name, setLastName] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [errors, setErrors] = useState([]);
+  const chatTheme = useChat()
 
+
+  console.log(chatTheme)
 
   function handleSubmit(e) {
     e.preventDefault();

@@ -1,3 +1,5 @@
+
+
 class ChatChannel < ApplicationCable::Channel
 
   def subscribed
@@ -12,12 +14,12 @@ class ChatChannel < ApplicationCable::Channel
 
   def receive(data)
     puts "received"*10
-    message = Message.create(content: data['content'], user_id: params[:user][:id], category_id: "#{params[:category].to_i}" )
+    message = Message.create(content: data['content'], user_id: params[:user][:id], category_id: "#{params[:category].to_i}", date: Time.now.strftime("%d/%m/%Y %H:%M") )
     ActionCable.server.broadcast("chat_#{params[:room]}", {user_id: params[:user][:id], category_id: "#{params[:category].to_i}", content: message, event_type: "message"})
   end
 
   def unsubscribed
-    ActionCable.server.broadcast("chat_#{params[:room]}", { user_id: current_user.id,category_id: "#{params[:category].to_i}", content: "#{current_user.first_name} has left the #{params[:room]}", event_type: "exit"})
+    ActionCable.server.broadcast("chat_#{params[:room]}", { user_id: params[:user][:id],category_id: "#{params[:category].to_i}", content: "#{params[:user][:first_name]} has left the #{params[:room]}", event_type: "exit"})
   end
 
 end

@@ -269,3 +269,13 @@ width: 75%;
   padding: 10px;
   height: 300px; /* Should be removed. Only for demonstration */
 }
+
+.scroller {
+  width: 80%;
+  border-radius: 15px;
+  border: 5px solid #422800;
+  height: 300px;
+  overflow-y: scroll;
+  scrollbar-color: rebeccapurple green;
+  scrollbar-width: thin;
+}

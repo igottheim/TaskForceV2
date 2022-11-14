@@ -53,31 +53,22 @@ console.log(user)
           
             setMessages((oldMessages) => [...oldMessages, {...data.content, user: data.user}])
          
-          // else{
-          //   setMessages((oldMessages) => [...oldMessages, {...data.content, user: user}])
-          // }
-
-          
+  
           }
           else if (data.event_type === "enter" && data.user_id !== user.id)
           {
-              // Calls `AppearanceChannel#appear(data)` on the server.
-              // this.perform("appear", { appearing_on: this.appearingOn })
-            
+         
             console.log("entering")
             console.log(data)
             console.log(user)
             console.log(consumer.subscriptions.subscriptions.length)
-            // setMessages(oldMessages => [...oldMessages, data.content])
-            // alert(`${data.content}`)
-            
+      
           }
           else if (data.event_type === "exit" && data.user_id !== user.id)
           {
            console.log(data) 
             console.log("goodbye")
-            // setMessages(oldMessages => [...oldMessages, data])
-            // alert(`${data.content}`)
+           
           }
     
         }
@@ -116,7 +107,7 @@ console.log(user)
 <div >
       <h3 className = "button-74">{rooms.category.name} CHAT</h3>
       </div>
-    <div className = "card">
+    <div className = "scroller">
       {messages1.map((message, i) => <p className = "chat-app" key={i}> {message.user.username}: {message.content} 💻 {message.date}</p>)}
       
 

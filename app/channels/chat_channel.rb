@@ -15,7 +15,7 @@ class ChatChannel < ApplicationCable::Channel
   def receive(data)
     puts "received"*10
     message = Message.create(content: data['content'], user_id: params[:user][:id], category_id: "#{params[:category].to_i}", date: Time.now.strftime("%d/%m/%Y %H:%M") )
-    ActionCable.server.broadcast("chat_#{params[:room]}", {user_id: params[:user][:id], category_id: "#{params[:category].to_i}", content: message, event_type: "message"})
+    ActionCable.server.broadcast("chat_#{params[:room]}", {user_id: params[:user][:id], user: params[:user], category_id: "#{params[:category].to_i}", content: message, event_type: "message"})
   end
 
   def unsubscribed
@@ -25,6 +25,7 @@ class ChatChannel < ApplicationCable::Channel
 
  
   def appear(data)
+    
     stream_from "chat_#{params[:room]}"
     ActionCable.server.broadcast("chat_#{params[:room]}", { user_id: params[:user][:id], category_id: "#{params[:category].to_i}",content: "#{params[:user][:first_name]} has streaming line 29 the #{params[:room]} room", room:params[:room], event_type: "enter", status: 'online' })
   end

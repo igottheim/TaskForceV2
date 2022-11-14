@@ -20,6 +20,7 @@ function ChatRoom({user, rooms, users1 }) {
 
 
 
+console.log(user)
 
   function handleMessageInputChange(e) {
     setMessageInput(e.target.value)
@@ -35,20 +36,8 @@ function ChatRoom({user, rooms, users1 }) {
     
   }
 
-  useEffect(() => {
-   
-      fetch('/messages')
-      .then(res => res.json())
-      .then(messages => 
-        setMessages(messages.filter((m)=>m.user!==null)))
-  }, [])
-
-
-
-
  
-  let messages1 = messages.filter((message)=> message.user!==null).filter((message)=> message.category_id === rooms.category_id)
-  
+ 
   useEffect(() => {
   
     if (user.id) {
@@ -59,11 +48,16 @@ function ChatRoom({user, rooms, users1 }) {
           if (data.event_type === "message")
           {
             let search = users1.filter((a)=>a.id === data.content.user_id)
-            console.log(consumer.subscriptions.subscriptions.length)
-            // console.log(data)
+            console.log(data)
+            console.log(user)
           
-            setMessages((oldMessages) => [...oldMessages, {...data.content, user: search[0]}])
-        
+            setMessages((oldMessages) => [...oldMessages, {...data.content, user: data.user}])
+         
+          // else{
+          //   setMessages((oldMessages) => [...oldMessages, {...data.content, user: user}])
+          // }
+
+          
           }
           else if (data.event_type === "enter" && data.user_id !== user.id)
           {
@@ -72,8 +66,9 @@ function ChatRoom({user, rooms, users1 }) {
             
             console.log("entering")
             console.log(data)
+            console.log(user)
             console.log(consumer.subscriptions.subscriptions.length)
-            setMessages(oldMessages => [...oldMessages, data.content])
+            // setMessages(oldMessages => [...oldMessages, data.content])
             // alert(`${data.content}`)
             
           }
@@ -81,7 +76,7 @@ function ChatRoom({user, rooms, users1 }) {
           {
            console.log(data) 
             console.log("goodbye")
-            setMessages(oldMessages => [...oldMessages, data])
+            // setMessages(oldMessages => [...oldMessages, data])
             // alert(`${data.content}`)
           }
     
@@ -101,6 +96,18 @@ function ChatRoom({user, rooms, users1 }) {
     }
     
   }, [user,users1])
+  let messages1 = messages.filter((message)=> message.user!==null).filter((message)=> message.category_id === rooms.category_id)
+  
+  useEffect(() => {
+   
+    fetch('/messages')
+    .then(res => res.json())
+    .then(messages => 
+      setMessages(messages.filter((m)=>m.user!==null)))
+}, [])
+
+
+
 
 
   return (

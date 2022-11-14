@@ -195,13 +195,17 @@ function App() {
     .then(room => setRooms(room))
 }, [])
 
+useEffect(() => {
+   
+  fetch('/messages')
+  .then(res => res.json())
+  .then(messages => 
+    setMessages(messages.filter((m)=>m.user!==null)))
+}, [])
+
 
 function deleteUser(e)
 {
-// console.log(e)
-// console.log(e.id)
-// console.log(e.messages)
-// console.log(messages)
 
   fetch(`/users/${e.id}`,
       {
@@ -284,13 +288,13 @@ console.log(users1)
       </div>
       <div className = "row">
       {chatTheme ? <h1 user={user} /> : null}  
-      {chatTheme ? <ChatRoom className = "column" users1 = {users1} rooms = {rooms[0]} messages = {messages}  user={user} /> : null}  
+      {chatTheme ? <ChatRoom className = "column" users1 = {users1} rooms = {rooms[0]}  user={user} /> : null}  
       {reactJS ? <h1 user={user} /> : null}  
-      {reactJS ? <ChatRoom className = "column" users1 = {users1} rooms = {rooms[1]} messages = {messages}  user={user} /> : null}  
+      {reactJS ? <ChatRoom className = "column" users1 = {users1} rooms = {rooms[1]}   user={user} /> : null}  
       {chat3Open ? <h1 user={user} /> : null}  
-      {chat3Open ? <ChatRoom className = "column" users1 = {users1} rooms = {rooms[2]} messages = {messages}  user={user} /> : null}  
+      {chat3Open ? <ChatRoom className = "column" users1 = {users1} rooms = {rooms[2]}  user={user} /> : null}  
       {chat4Open ? <h1 user={user} /> : null}  
-      {chat4Open ? <ChatRoom className = "column" users1 = {users1} rooms = {rooms[3]} messages = {messages}  user={user} /> : null} 
+      {chat4Open ? <ChatRoom className = "column" users1 = {users1} rooms = {rooms[3]}  user={user} /> : null} 
       </div> 
           </Route>
           <Route path="/activeusers">

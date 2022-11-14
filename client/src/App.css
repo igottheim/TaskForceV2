@@ -1,6 +1,6 @@
 .App{
  
-  width: 1000px;
+  width: 100%px;
   height: 500px;
   margin: auto;
   border: #8f246c;
@@ -46,7 +46,8 @@ body{
     -webkit-transition: .5s;
     transition: .5s;
     width: 80%;
-    padding:5px
+    padding:5px;
+    text-align: left;
 
 }
 
@@ -265,17 +266,44 @@ width: 75%;
 
 /* Create two equal columns that sits next to each other */
 .column {
-  flex: 50%;
+  flex: 25%;
   padding: 10px;
   height: 300px; /* Should be removed. Only for demonstration */
 }
 
 .scroller {
-  width: 80%;
+  flex: 25%;
+  width: 90%;
   border-radius: 15px;
   border: 5px solid #422800;
   height: 300px;
   overflow-y: scroll;
   scrollbar-color: rebeccapurple green;
   scrollbar-width: thin;
+}
+
+.div1 {
+  text-align: center;
+ width:25%;
+}
+
+.button-77 {
+
+  background-color: #659ab8;
+  border: 2px solid #181919;
+  border-radius: 30px;
+  box-shadow: #422800 4px 4px 0 0;
+  color: #422800;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 600;
+  font-size: 18px;
+  padding: 0 10px;
+  
+  line-height: 40px;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
 }

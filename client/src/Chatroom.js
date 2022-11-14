@@ -102,13 +102,13 @@ console.log(user)
 
 
   return (
-    <div >
+    <div className = "div1">
 
 <div >
-      <h3 className = "button-74">{rooms.category.name} CHAT</h3>
+      <h3 className = "button-77">{rooms.category.name} CHAT</h3>
       </div>
     <div className = "scroller">
-      {messages1.map((message, i) => <p className = "chat-app" key={i}> {message.user.username}: {message.content} 💻 {message.date}</p>)}
+      {messages1.map((message, i) => <p className = "chat-app" key={i}> {message.user.username}: {message.content} 💻 {message.time}</p>)}
       
 
       </div>

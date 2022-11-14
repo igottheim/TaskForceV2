@@ -47,59 +47,67 @@ function SignUp({ setCurrentUser, setUsers}) {
 }
 
   return (
-    <div>
-      <form  className="form-control" onSubmit={handleSubmit}>
+    <div >
+      <form  className="signup" onSubmit={handleSubmit}>
         <h1 className = "div3">Sign Up</h1>
-        <label  className = "div3" htmlFor="username">Username</label>
+       <div>
+       <label  className = "div3" htmlFor="username">Username</label>
         <input
-        className = "link2"
+        className = "link5"
           type="text"
           id="username"
           autoComplete="off"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
+        </div>
+        <div>
         <label  className = "div3" htmlFor="password">Password</label>
         <input
-         className = "link2"
+         className = "link5"
           type="password"
           id="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           autoComplete="current-password"
         />
+       </div>
+       <div>
         <label  className = "div3" htmlFor="password">Password </label>
         <label  className = "div3" htmlFor="password">Confirmation</label>
         <input
-         className = "link2"
+         className = "link5"
           type="password"
           id="password_confirmation"
           value={passwordConfirmation}
           onChange={(e) => setPasswordConfirmation(e.target.value)}
           autoComplete="current-password"
         />
+         </div>
          <label  className = "div3" htmlFor="first_name">First Name</label>
         <input
-         className = "link2"
+         className = "link5"
           type="text"
           id="first_name"
           value={first_name}
           onChange={(e) => setFirstName(e.target.value)}
           autoComplete="off"
         />
+        <div>
          <label  className = "div3" htmlFor="last_name">Last Name</label>
         <input
-         className = "link2"
+         className = "link5"
           type="text"
           id="last_name"
           value={last_name}
           onChange={(e) => setLastName(e.target.value)}
           autoComplete="off"
         />
+        </div>
          {errors.map((err) => (
          <h1 className = "link2">{err}</h1>
         ))}
-        <button type="submit">Sign Up</button>
+        <button className = "login_button" type="submit">Sign Up</button>
       </form>
   
       

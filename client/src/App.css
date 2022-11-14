@@ -1,3 +1,13 @@
+.App{
+ 
+  width: 1000px;
+  height: 500px;
+  margin: auto;
+  border: #8f246c;
+
+
+}
+
 body{
   background-color: #f4f7f6;
   margin-top:20px;
@@ -9,15 +19,252 @@ body{
   margin-bottom: 30px;
   border-radius: .55rem;
   position: relative;
-  width: 33%;
-  border: 4px solid #b0215e;
+  width: 100%;
+  border: 4px solid #2149b0;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
+  overflow-wrap: break-word;
+}
+
+.card1 {
+  background: rgb(90, 91, 90);
+  transition: .5s;
+  border: 0;
+  margin-bottom: 5px;
+  border-radius: .55rem;
+  position: relative;
+  width: 15%;
+  border: 1px solid #2140b0;
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
 }
-/* .chat-app  {
+
+.chat-app  {
+ font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: large;
+    list-style: none;
+    -moz-transition: .5s;
+    -o-transition: .5s;
+    -webkit-transition: .5s;
+    transition: .5s;
+    width: 30%
+
+}
+
+.chat1{
+  text-align: center;
+  padding: 5px;
+  color: #bb0606;
+  cursor: pointer;
+  border-radius: .55rem;
+
+}
+
+.column {
+  float: left;
+  width: 50%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.textArea{
+  width: 50%;
+  resize: none;
+  overflow: hidden;
+  padding: 5px !important;
+  outline: none;
+  border: 3px solid #0890be;
+  border-radius: .55rem;
+  text-indent: 5px;
+  box-shadow: none;
+  height: 100%;
+  font-size: 16px;
+  color: #bb0606;
+  background-color: rgb(233, 237, 236);
+}
+
+.reply-send{
+padding: 20px ;
+color: #402bb7;
+border: 3px solid #0890be;
+border-radius: .55rem;
+width: 75%;
+
+}
+
+.NAV{
+  text-align: left;
+  padding: 20px ;
+  color: #b7712b;
+  border: 5px solid #2f378a;
+  border-radius: .55rem;
+
+}
+
+
+
+.NAV2{
+  text-align: right;
+  padding: 20px ;
+  color: #b7712b;
+  border-radius: .55rem;
+  
+
+}
+
+.NAV3{
+  text-align: right;
+  padding: 10px ;
+  color: #b7712b;
+  border-radius: .55rem;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+}
+
+
+
+/* CSS */
+.button-74 {
  
-  position: absolute;
-  left: 0;
-  top: 0;
-  padding: 20px;
-  z-index: 7
-} */
+  background-color: #659ab8;
+  border: 2px solid #181919;
+  border-radius: 30px;
+  box-shadow: #422800 4px 4px 0 0;
+  color: #422800;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 600;
+  font-size: 18px;
+  padding: 0 10px;
+  line-height: 40px;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-75 {
+ 
+  background-color: #659ab8;
+  border: 2px solid #0e1011;
+  border-radius: 30px;
+  box-shadow: #040042 4px 4px 0 0;
+  color: #422800;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 600;
+  font-size: 18px;
+  padding: 0 15px;
+  line-height: 40px;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-76{
+
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 40px;
+  text-align: left;
+  text-decoration: none;
+  
+}
+
+.login_button{
+  border: 2px solid #001142;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 20px;
+  text-align: left;
+  text-decoration: none;
+  
+}
+
+.signup{
+  
+  margin:50px 0px; padding:20px;
+  text-align:center;
+ 
+  background-color: #659ab8;
+  border: 2px solid #422800;
+  border-radius: 30px;
+  box-shadow: #422800 4px 4px 0 0;
+  color: #422800;
+  cursor: pointer;
+  
+  font-weight: 600;
+  font-size: 18px;
+  padding: 0 15px;
+  line-height: 40px;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+
+
+}
+
+.link5{
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  border: 3px solid currentColor;
+  padding: calc(var(--size-bezel) * 1.5) var(--size-bezel);
+  color: currentColor;
+  background: transparent;
+  border-radius: var(--size-radius);
+}
+
+.link4{    
+
+  
+  --color-light: rgb(150, 177, 199);
+  --color-dark: #212121;
+  --color-signal: #fab700;
+  --color-background: var(--color-light);
+  --color-text: var(--color-dark);
+  --color-accent: var(--color-signal);
+  --size-bezel: .5rem;
+  --size-radius: 4px;
+  line-height: 1.4;
+  font-family: "Inter", sans-serif;
+  font-size: calc(.6rem + .4vw);
+  color: var(--color-text);
+  background: var(--color-background);
+  font-weight: 300;
+  padding: 0 calc(var(--size-bezel) * 3);
+ border-radius: 15px;
+  border: 5px solid #422800;
+  box-shadow: #003042 4px 4px 0 0;
+}
+
+.center-col {
+  flex: 1;
+  background: #aaa;
+  overflow-y: scroll;
+}
+
+.chats
+{
+  padding: 5px;
+}
+
+.row {
+  display: flex;
+}
+
+/* Create two equal columns that sits next to each other */
+.column {
+  flex: 50%;
+  padding: 10px;
+  height: 300px; /* Should be removed. Only for demonstration */
+}

@@ -1,16 +1,22 @@
 import React, { useState, useContext, useTransition } from "react";
 import { useParams } from "react-router-dom";
 import { useEffect, Component } from "react";
-import chatContext from './App'
+import chatContext from './App'  
+import { LiveUserContext } from "./LiveUsers";
+
 
 function Login({ setCurrentUser}) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState([]);
- 
+  const [errors, setErrors] = useState("")
   const test1 = useContext(chatContext)
   console.log(test1)
   
+
+
+const {liveUsers, setLiveUsers}= useContext(LiveUserContext)
+console.log(liveUsers)
+
 function setCurrentUser1(user1)
 {
 setCurrentUser(user1)
@@ -26,7 +32,10 @@ setCurrentUser(user1)
       body: JSON.stringify({ username, password }),
     }).then((r) => {
       if (r.ok) {
-        r.json().then((user) => setCurrentUser1(user));
+        r.json().then((user) => {setCurrentUser1(user)
+          setLiveUsers([...liveUsers,user])
+        });
+
       }
       else {
         r.json().then((err) => setErrors(err.errors));
@@ -37,11 +46,11 @@ setCurrentUser(user1)
   return (
 
    
-    <div className = "container">
+    <div className = "link4">
       <form onSubmit={handleSubmit}>
         <h1>Login</h1>
         <h1>{test1}</h1>
-        <label className = "link5" htmlFor="username">Username</label>
+        <label className = "button-76" htmlFor="username">Username</label>
         <input className = "link5"
           type="text"
           id="username"
@@ -49,7 +58,7 @@ setCurrentUser(user1)
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
-        <label className = "link5" htmlFor="password">Password</label>
+        <label className = "button-76" htmlFor="password">Password</label>
         <input className = "link5"
           type="password"
           id="password"
@@ -57,11 +66,11 @@ setCurrentUser(user1)
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button type="submit">Login</button>
+        <button className = "login_button" type="submit">Login</button>
       </form>
-      {errors.map((err) => (
+      {/* {errors.map((err) => (
           <h1 key={err}>{err}</h1>
-        ))}
+        ))} */}
     </div>
   );
 }

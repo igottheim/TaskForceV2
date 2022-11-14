@@ -33,7 +33,7 @@ setCurrentUser(user1)
     }).then((r) => {
       if (r.ok) {
         r.json().then((user) => {setCurrentUser1(user)
-          setLiveUsers([...liveUsers,user])
+          // setLiveUsers([...liveUsers,user])
         });
 
       }
@@ -68,9 +68,9 @@ setCurrentUser(user1)
         />
         <button className = "login_button" type="submit">Login</button>
       </form>
-      {/* {errors.map((err) => (
+      {errors.length>0?errors.map((err) => (
           <h1 key={err}>{err}</h1>
-        ))} */}
+        )):null}
     </div>
   );
 }

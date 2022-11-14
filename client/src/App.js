@@ -11,137 +11,132 @@ import { ActionCableProvider } from "./actioncable";
 import { ChatProvider } from "./chatContext";
 import { ReactProvider, useChatR, useUpdateR } from "./ReactJSContext";
 import { UserContext } from './ReactJSContext';
+import ChatRoom from "./Chatroom";
 import { LiveUserContext } from "./LiveUsers";
 import { Provider } from "react-redux";
 import { useContext } from "react";
+import ActiveUsers from "./ActiveUsers";
+import Home from "./Home";
 const consumer = createConsumer()
 
 
 
 
-function ChatRoom({user, rooms, users1 }) {
+// function ChatRoom({user, rooms, users1 }) {
 
-  const [messages, setMessages] = useState([])
-  const [messageInput, setMessageInput] = useState('')
-  const [channel, setChannel] = useState(null)
-  const [currentRoom, setCurrentRoom] = useState(null)
+//   const [messages, setMessages] = useState([])
+//   const [messageInput, setMessageInput] = useState('')
+//   const [channel, setChannel] = useState(null)
+//   const [currentRoom, setCurrentRoom] = useState(null)
 
-  const [errors, setErrors] = useState([]);
-  const {liveUsers, setLiveUsers}= useContext(LiveUserContext)
+//   const [errors, setErrors] = useState([]);
+//   const {liveUsers, setLiveUsers}= useContext(LiveUserContext)
 
 
 
-console.log(liveUsers)
 
-  function handleMessageInputChange(e) {
-    setMessageInput(e.target.value)
+//   function handleMessageInputChange(e) {
+//     setMessageInput(e.target.value)
 
-  }
+//   }
 
-  function handleSubmit(e) {
-    e.preventDefault()
-  //  console.log(messageInput, user)
+//   function handleSubmit(e) {
+//     e.preventDefault()
+//   //  console.log(messageInput, user)
 
-    channel.send({content: messageInput})
-    setMessageInput('')
+//     channel.send({content: messageInput})
+//     setMessageInput('')
     
-  }
-
-  useEffect(() => {
-   
-      fetch('/messages')
-      .then(res => res.json())
-      .then(messages => 
-        setMessages(messages.filter((m)=>m.user!==null)))
-  }, [])
-
-
+//   }
 
 //   useEffect(() => {
    
-//     fetch('/rooms')
-//     .then(res => res.json())
-//     .then(room => setRooms(room))
-// }, [])
+//       fetch('/messages')
+//       .then(res => res.json())
+//       .then(messages => 
+//         setMessages(messages.filter((m)=>m.user!==null)))
+//   }, [])
+
+
 
 
  
-  let messages1 = messages.filter((message)=> message.user!==null).filter((message)=> message.category_id === rooms.category_id)
+//   let messages1 = messages.filter((message)=> message.user!==null).filter((message)=> message.category_id === rooms.category_id)
   
-  useEffect(() => {
+//   useEffect(() => {
   
-    if (user.id) {
-      const newChannel = consumer.subscriptions.create({ channel: "ChatChannel", room: rooms.category.name, category: rooms.category_id, user_id: user.id, user:user },
-      {
-        received: (data) => {
+//     if (user.id) {
+//       const newChannel = consumer.subscriptions.create({ channel: "ChatChannel", room: rooms.category.name, category: rooms.category_id, user_id: user.id, user:user },
+//       {
+//         received: (data) => {
        
-          if (data.event_type === "message")
-          {
-            let search = users1.filter((a)=>a.id === data.content.user_id)
-            console.log(consumer.subscriptions.subscriptions.length)
-            // console.log(data)
+//           if (data.event_type === "message")
+//           {
+//             let search = users1.filter((a)=>a.id === data.content.user_id)
+//             console.log(consumer.subscriptions.subscriptions.length)
+//             // console.log(data)
           
-            setMessages((oldMessages) => [...oldMessages, {...data.content, user: search[0]}])
+//             setMessages((oldMessages) => [...oldMessages, {...data.content, user: search[0]}])
         
-          }
-          else if (data.event_type === "enter" && data.user_id !== user.id)
-          {
-              // Calls `AppearanceChannel#appear(data)` on the server.
-              // this.perform("appear", { appearing_on: this.appearingOn })
+//           }
+//           else if (data.event_type === "enter" && data.user_id !== user.id)
+//           {
+//               // Calls `AppearanceChannel#appear(data)` on the server.
+//               // this.perform("appear", { appearing_on: this.appearingOn })
             
-            console.log("entering")
-            console.log(data)
-            console.log(consumer.subscriptions.subscriptions.length)
-            setMessages(oldMessages => [...oldMessages, data.content])
-            // alert(`${data.content}`)
+//             console.log("entering")
+//             console.log(data)
+//             console.log(consumer.subscriptions.subscriptions.length)
+//             setMessages(oldMessages => [...oldMessages, data.content])
+//             // alert(`${data.content}`)
             
-          }
-          else if (data.event_type === "exit" && data.user_id !== user.id)
-          {
-           console.log(data) 
-            console.log("goodbye")
-            setMessages(oldMessages => [...oldMessages, data])
-            // alert(`${data.content}`)
-          }
+//           }
+//           else if (data.event_type === "exit" && data.user_id !== user.id)
+//           {
+//            console.log(data) 
+//             console.log("goodbye")
+//             setMessages(oldMessages => [...oldMessages, data])
+//             // alert(`${data.content}`)
+//           }
     
-        }
-      }, [user.id])
+//         }
+//       }, [user.id])
 
-      setChannel(newChannel)
+//       setChannel(newChannel)
    
 
-      return function cleanup()
-      {
-        console.log("unsubscribing ")
-        newChannel.unsubscribe()
-      }
+//       return function cleanup()
+//       {
+//         console.log("unsubscribing ")
+//         newChannel.unsubscribe()
+//       }
   
      
-    }
+//     }
     
-  }, [user,users1])
+//   }, [user,users1])
 
 
-  return (
-    <div >
+//   return (
+//     <div >
 
-<div >
-      <h3 className = "button-74">{rooms.category.name} CHAT</h3>
-      </div>
-    <div className = "card">
-      {messages1.map((message, i) => <p className = "chat-app" key={i}> {message.user.username}: {message.content} 💻 {message.date}</p>)}
+// <div >
+//       <h3 className = "button-74">{rooms.category.name} CHAT</h3>
+//       </div>
+//     <div className = "card">
+//       {messages1.map((message, i) => <p className = "chat-app" key={i}> {message.user.username}: {message.content} 💻 {message.date}</p>)}
       
 
-      </div>
-      <form onSubmit={handleSubmit}>
-        <div className = "reply-send"><input className = "textArea" type="text" value={messageInput} onChange={handleMessageInputChange} />
-        SEND MESSAGE ➡️<button>✈️</button>
-        </div>
-      </form>
+//       </div>
+//       <form onSubmit={handleSubmit}>
+//         <div className = "reply-send"><input className = "textArea" type="text" value={messageInput} onChange={handleMessageInputChange} />
+//         SEND MESSAGE ➡️<button>✈️</button>
+//         </div>
+//       </form>
 
-    </div>
-  )
-}
+//     </div>
+//   )
+// }
 
 
 
@@ -188,7 +183,7 @@ function App() {
     .then(users => {
       setUsers1(users)
     })
-  }, [])
+  }, [setCurrentUser])
 
 
 
@@ -289,22 +284,28 @@ console.log(users1)
       </div>
       <div className = "row">
       {chatTheme ? <h1 user={user} /> : null}  
-      {chatTheme ? <ChatRoom className = "column" users1 = {users1} rooms = {rooms[0]} messages = {messages} user={user} /> : null}  
+      {chatTheme ? <ChatRoom className = "column" users1 = {users1} rooms = {rooms[0]} messages = {messages}  user={user} /> : null}  
       {reactJS ? <h1 user={user} /> : null}  
-      {reactJS ? <ChatRoom className = "column" users1 = {users1} rooms = {rooms[1]} messages = {messages} user={user} /> : null}  
+      {reactJS ? <ChatRoom className = "column" users1 = {users1} rooms = {rooms[1]} messages = {messages}  user={user} /> : null}  
       {chat3Open ? <h1 user={user} /> : null}  
-      {chat3Open ? <ChatRoom className = "column" users1 = {users1} rooms = {rooms[2]} messages = {messages} user={user} /> : null}  
+      {chat3Open ? <ChatRoom className = "column" users1 = {users1} rooms = {rooms[2]} messages = {messages}  user={user} /> : null}  
       {chat4Open ? <h1 user={user} /> : null}  
-      {chat4Open ? <ChatRoom className = "column" users1 = {users1} rooms = {rooms[3]} messages = {messages} user={user} /> : null} 
+      {chat4Open ? <ChatRoom className = "column" users1 = {users1} rooms = {rooms[3]} messages = {messages}  user={user} /> : null} 
       </div> 
+          </Route>
+          <Route path="/activeusers">
+         <ActiveUsers users = {users1}/>
           </Route>
           </Switch>
            ) : (
           <Switch>
+              <Route exact path="/">
+         <Home/>
+          </Route>
             <Route path="/signup">
           <SignUp setCurrentUser = {setUsers2}></SignUp>
           </Route>
-          <Route path="/">
+          <Route path="/login">
           <Login setCurrentUser = {setCurrentUser}></Login>
           </Route>
 

@@ -13,6 +13,7 @@ import { ReactProvider, useChatR, useUpdateR } from "./ReactJSContext";
 import { UserContext } from './ReactJSContext';
 import ChatRoom from "./Chatroom";
 import { LiveUserContext } from "./LiveUsers";
+
 import { Provider } from "react-redux";
 import { useContext } from "react";
 import ActiveUsers from "./ActiveUsers";
@@ -138,6 +139,7 @@ console.log(users1)
 
     
     <BrowserRouter>
+
     <LiveUserContext.Provider value = {{liveUsers, setLiveUsers}}>
 <UserContext.Provider value = {{reactJS,setReactJS}}>
       <div className="App">

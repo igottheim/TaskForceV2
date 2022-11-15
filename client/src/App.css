@@ -1,9 +1,10 @@
 .App{
  
   width: 100%px;
-  height: 500px;
+
   margin: auto;
   border: #8f246c;
+  background-color: #94c4b4;
 
 
 }
@@ -207,6 +208,19 @@ background-color: rgb(196, 207, 159);
   
 }
 
+.button-78{
+
+  margin-left: 20%;
+  background-color: #659ab8;
+  border: 2px solid #0e1011;
+  border-radius: 10px;
+  width: 50%;
+
+
+
+ 
+}
+
 .login_button{
   border: 2px solid #001142;
   border-radius: 5px;
@@ -256,22 +270,21 @@ background-color: rgb(196, 207, 159);
 
 .link4{    
 
-  
+  padding: 10px;
   --color-light: rgb(150, 177, 199);
-  --color-dark: #212121;
-  --color-signal: #fab700;
+
   --color-background: var(--color-light);
   --color-text: var(--color-dark);
   --color-accent: var(--color-signal);
   --size-bezel: .5rem;
-  --size-radius: 4px;
+
   line-height: 1.4;
   font-family: "Inter", sans-serif;
   font-size: calc(.6rem + .4vw);
   color: var(--color-text);
   background: var(--color-background);
   font-weight: 300;
-  padding: 0 calc(var(--size-bezel) * 3);
+ 
  border-radius: 15px;
   border: 5px solid #422800;
   box-shadow: #003042 4px 4px 0 0;
@@ -336,3 +349,18 @@ background-color: rgb(196, 207, 159);
   -webkit-user-select: none;
   touch-action: manipulation;
 }
+/* 
+ul {
+  counter-reset: index;  
+  padding: 0;
+  max-width: 300px;
+}
+
+li {
+  counter-increment: index; 
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+  box-sizing: border-box;
+} */
+

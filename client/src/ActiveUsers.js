@@ -1,16 +1,19 @@
 import React, { useState, } from "react";
-
+import { useMessage } from "./messageContext";
 function ActiveUsers({users, messages}) {
   
-  console.log(users)
-  console.log(messages)
 
-  let userMap = users.map((a)=> <div>
+  const x = useMessage()
+  
+
+
+
+  let userMap = users.map((a)=> <li className = "button-78">
     
     
     <h1>  Username: {a.username} </h1>
     <h2>{a.messages.length>0? `Last Activity:${a.messages[a.messages.length-1].date}`:"Inactive/No Messages" }</h2>
-    </div>)
+    </li>)
 
 
     return (
@@ -18,7 +21,7 @@ function ActiveUsers({users, messages}) {
        <div>
         
         <h1>Current Users</h1>
-        <ol>{userMap}</ol>
+        <ul className = "scroller">{userMap}</ul>
         
         </div>
     );

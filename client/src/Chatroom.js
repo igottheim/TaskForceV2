@@ -6,6 +6,7 @@ import { createConsumer } from "@rails/actioncable"
 
 import { Provider } from "react-redux";
 import { useContext } from "react";
+import { useMessage, useUpdate } from "./messageContext";
 const consumer = createConsumer()
 
 function ChatRoom({user, rooms, users1 }) {
@@ -14,9 +15,11 @@ function ChatRoom({user, rooms, users1 }) {
   const [messageInput, setMessageInput] = useState('')
   const [channel, setChannel] = useState(null)
   const [currentRoom, setCurrentRoom] = useState(null)
-
   const [errors, setErrors] = useState([]);
   const {liveUsers, setLiveUsers}= useContext(LiveUserContext)
+  const messageTheme = useMessage()
+  const messageToggle = useUpdate()
+
 
 
 
@@ -52,7 +55,8 @@ console.log(user)
             console.log(user)
           
             setMessages((oldMessages) => [...oldMessages, {...data.content, user: data.user}])
-         
+            messageToggle({...data.content, user: data.user})
+
   
           }
           else if (data.event_type === "enter" && data.user_id !== user.id)
@@ -95,9 +99,10 @@ console.log(user)
     .then(res => res.json())
     .then(messages => 
       setMessages(messages.filter((m)=>m.user!==null)))
+    
 }, [])
 
-
+console.log(messageTheme)
 
 
 

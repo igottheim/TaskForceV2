@@ -95,26 +95,28 @@ body{
 
 .textArea{
   width: 50%;
-  resize: none;
-  overflow: hidden;
+  
   padding: 5px !important;
   outline: none;
   border: 3px solid #0890be;
   border-radius: .55rem;
-  text-indent: 5px;
+  text-indent: 0px;
   box-shadow: none;
   height: 100%;
   font-size: 16px;
   color: #bb0606;
+
   background-color: rgb(233, 237, 236);
 }
 
 .reply-send{
 padding: 5% ;
 color: #402bb7;
-border: 3px solid #0890be;
+border: 3px solid #06090a;
 border-radius: .55rem;
 width: 80%;
+font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+background-color: rgb(196, 207, 159);
 
 
 
@@ -122,6 +124,8 @@ width: 80%;
 }
 
 .NAV{
+  font-weight: 600;
+  font-size: 30px;
   text-align: left;
   padding: 20px ;
   color: #b7712b;

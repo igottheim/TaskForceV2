@@ -1,6 +1,6 @@
 import React, { useState, } from "react";
 
-function ActiveUsers({users, messages }) {
+function ActiveUsers({users, messages}) {
   
   console.log(users)
   console.log(messages)
@@ -9,7 +9,7 @@ function ActiveUsers({users, messages }) {
     
     
     <h1>  Username: {a.username} </h1>
-    <h2>{a.messages.length>0? `Last Activity:${a.messages[0].date}`:"Inactive/No Messages" }</h2>
+    <h2>{a.messages.length>0? `Last Activity:${a.messages[a.messages.length-1].date}`:"Inactive/No Messages" }</h2>
     </div>)
 
 

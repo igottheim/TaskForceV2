@@ -25,7 +25,6 @@ class ChatChannel < ApplicationCable::Channel
 
  
   def appear(data)
-    
     stream_from "chat_#{params[:room]}"
     ActionCable.server.broadcast("chat_#{params[:room]}", { user_id: params[:user][:id], category_id: "#{params[:category].to_i}",content: "#{params[:user][:first_name]} has streaming line 29 the #{params[:room]} room", room:params[:room], event_type: "enter", status: 'online' })
   end

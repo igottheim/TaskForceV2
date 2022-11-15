@@ -108,7 +108,9 @@ console.log(user)
       <h3 className = "button-77">{rooms.category.name} CHAT</h3>
       </div>
     <div className = "scroller">
-      {messages1.map((message, i) => <p className = "chat-app" key={i}> {message.user.username}: {message.content} 💻 {message.time}</p>)}
+      {messages1.map((message, i) => message.user.id===user.id? <p className = "chat-app" key={i}> {message.user.username}: {message.content} 💻 {message.date}</p>:
+      <p className = "chat-app1" key={i}> {message.user.username}: {message.content} 💻 {message.date}</p>
+      )}
       
 
       </div>

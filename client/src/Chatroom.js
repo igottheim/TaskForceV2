@@ -1,4 +1,5 @@
 
+import {format, formatInTimeZone,utcToZonedTime} from 'date-fns-tz'
 
 import React, { useState, useEffect, Component } from "react";
 
@@ -108,8 +109,8 @@ function ChatRoom({user, rooms, users1 }) {
       <h3 className = "button-77">{rooms.category.name} CHAT</h3>
       </div>
     <div className = "scroller">
-      {messages1.map((message, i) => message.user.id===user.id? <p className = "chat-app" key={i}> {message.user.username}: {message.content} 💻 {message.date}</p>:
-      <p className = "chat-app1" key={i}> {message.user.username}: {message.content} 💻 {message.date}</p>
+      {messages1.map((message, i) => message.user.id===user.id? <p className = "chat-app" key={i}> {message.user.username}: {message.content} 💻 {formatInTimeZone(message.date, 'Europe/London', 'yyyy-MM-dd HH:mm:ss 	a')}</p>:
+      <p className = "chat-app1" key={i}> {message.user.username}: {message.content} 💻 {formatInTimeZone(message.date, 'Europe/London', 'yyyy-MM-dd HH:mm:ss 	a')}</p>  
       )}
       
 

@@ -5,7 +5,7 @@ class MessageSerializer < ActiveModel::Serializer
   belongs_to :category
 
   def date
-    self.object.date.strftime("%m/%d/%Y @ %H:%M")
+    self.object.date
   end
 
 end

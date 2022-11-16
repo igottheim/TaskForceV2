@@ -7,6 +7,7 @@ import { createConsumer } from "@rails/actioncable"
 import { Provider } from "react-redux";
 import { useContext } from "react";
 import { useMessage, useUpdate } from "./messageContext";
+
 const consumer = createConsumer()
 
 function ChatRoom({user, rooms, users1 }) {
@@ -23,7 +24,6 @@ function ChatRoom({user, rooms, users1 }) {
 
 
 
-console.log(user)
 
   function handleMessageInputChange(e) {
     setMessageInput(e.target.value)
@@ -50,14 +50,15 @@ console.log(user)
        
           if (data.event_type === "message")
           {
-            let search = users1.filter((a)=>a.id === data.content.user_id)
+            // let search = users1.filter((a)=>a.id === data.content.user_id)
             console.log(data)
             console.log(user)
+            console.log(data.content)
           
             setMessages((oldMessages) => [...oldMessages, {...data.content, user: data.user}])
-            messageToggle({...data.content, user: data.user})
+            
 
-  
+            
           }
           else if (data.event_type === "enter" && data.user_id !== user.id)
           {
@@ -65,14 +66,15 @@ console.log(user)
             console.log("entering")
             console.log(data)
             console.log(user)
-            console.log(consumer.subscriptions.subscriptions.length)
-      
+           
+            setMessages((oldMessages) => [...oldMessages, {content: data.content, user_id: data.user_id, user: data.user, category_id: parseInt(data.category_id), date: data.date}])
           }
           else if (data.event_type === "exit" && data.user_id !== user.id)
           {
            console.log(data) 
-            console.log("goodbye")
-           
+         
+          setMessages((oldMessages) => [...oldMessages, {content: data.content, user_id: data.user_id, user: data.user, category_id: parseInt(data.category_id), date: data.date}])
+          
           }
     
         }

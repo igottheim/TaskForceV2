@@ -8,7 +8,7 @@ function ActiveUsers({users, messages}) {
 
 
 
-  let userMap = users.map((a)=> <li className = "chat-app1">
+  let userMap = users.map((a)=> <li className = "button-79">
     
     
     <h1>  Username: {a.username} </h1>

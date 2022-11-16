@@ -1,12 +1,9 @@
 
 
 import React, { useState, useEffect, Component } from "react";
-import { LiveUserContext } from "./LiveUsers";
+
 import { createConsumer } from "@rails/actioncable"
 
-import { Provider } from "react-redux";
-import { useContext } from "react";
-import { useMessage, useUpdate } from "./messageContext";
 
 const consumer = createConsumer()
 
@@ -15,11 +12,7 @@ function ChatRoom({user, rooms, users1 }) {
   const [messages, setMessages] = useState([])
   const [messageInput, setMessageInput] = useState('')
   const [channel, setChannel] = useState(null)
-  const [currentRoom, setCurrentRoom] = useState(null)
-  const [errors, setErrors] = useState([]);
-  const {liveUsers, setLiveUsers}= useContext(LiveUserContext)
-  const messageTheme = useMessage()
-  const messageToggle = useUpdate()
+  
 
 
 
@@ -104,7 +97,7 @@ function ChatRoom({user, rooms, users1 }) {
     
 }, [])
 
-console.log(messageTheme)
+
 
 
 

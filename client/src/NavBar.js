@@ -22,7 +22,7 @@ function NavBar({ user, setUser }) {
   console.log(reactJS)
 
   return (
-    <div className = "NAV" >🐥⛄🎃🌞😃😆🙂🥴😎👽 FLATIRON DISCORD 🐥⛄🎃🌞😃😆🙂🥴😎👽
+    <div className = "NAV" >🐥⛄🎃🌞😃😆🙂🥴😎👽 FLATIRON MISCORD 🐥⛄🎃🌞😃😆🙂🥴😎👽
       <div className = "NAV2">
         {user ? (
             <>

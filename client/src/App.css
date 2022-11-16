@@ -215,10 +215,16 @@ background-color: rgb(196, 207, 159);
   border: 2px solid #0e1011;
   border-radius: 10px;
   width: 50%;
+}
 
+.button-79{
 
-
- 
+  margin-left: 20%;
+  background-color: #659ab8;
+  border: 2px solid #0e1011;
+  border-radius: 10px;
+  width: 50%;
+  overflow-wrap: break-word;
 }
 
 .login_button{

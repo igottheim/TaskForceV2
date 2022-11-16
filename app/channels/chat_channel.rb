@@ -14,7 +14,8 @@ class ChatChannel < ApplicationCable::Channel
 
   def receive(data)
     puts "received"*10
-    message = Message.create(content: data['content'], user_id: params[:user][:id], category_id: "#{params[:category].to_i}", date: Time.now+ Time.zone_offset('EST'))
+  
+    message = Message.create(content: data['content'], user_id: params[:user][:id], category_id: "#{params[:category].to_i}", date: (Time.now+ Time.zone_offset('EST')))
     ActionCable.server.broadcast("chat_#{params[:room]}", {user_id: params[:user][:id], user: params[:user], category_id: "#{params[:category].to_i}", content: message, event_type: "message"})
   end
 

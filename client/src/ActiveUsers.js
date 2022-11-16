@@ -8,11 +8,11 @@ function ActiveUsers({users, messages}) {
 
 
 
-  let userMap = users.map((a)=> <li className = "button-78">
+  let userMap = users.map((a)=> <li className = "chat-app1">
     
     
     <h1>  Username: {a.username} </h1>
-    <h2>{a.messages.length>0? `Last Activity:${a.messages[a.messages.length-1].date}`:"Inactive/No Messages" }</h2>
+    <h2 >{a.messages.length>0? `Last Activity:${a.messages[a.messages.length-1].date}`:"Inactive/No Messages" }</h2>
     </li>)
 
 

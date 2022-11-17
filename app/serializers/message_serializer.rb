@@ -6,6 +6,7 @@ class MessageSerializer < ActiveModel::Serializer
 
   def date
     self.object.date
+
   end
 
 end

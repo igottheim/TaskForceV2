@@ -8,7 +8,7 @@ class ChatChannel < ApplicationCable::Channel
     stop_all_streams
     # user = User.find_by(id:params[:user_id])
     stream_from "chat_#{params[:room]}"
-    ActionCable.server.broadcast("chat_#{params[:room]}", { date: Time.now.strftime("%m/%d/%Y @ %I:%M%p" ), user: params[:user], user_id: params[:user][:id], category_id: "#{params[:category].to_i}",content: "#{params[:user][:first_name]} has entered the #{params[:room]} room", room:params[:room], event_type: "enter", status: 'online' })
+    ActionCable.server.broadcast("chat_#{params[:room]}", { date:Time.now+ Time.zone_offset('EST'), user: params[:user], user_id: params[:user][:id], category_id: "#{params[:category].to_i}",content: "#{params[:user][:first_name]} has entered the #{params[:room]} room", room:params[:room], event_type: "enter", status: 'online' })
    
   end
 
@@ -20,7 +20,7 @@ class ChatChannel < ApplicationCable::Channel
   end
 
   def unsubscribed
-    ActionCable.server.broadcast("chat_#{params[:room]}", { date: Time.now.strftime("%m/%d/%Y @ %I:%M%p" ), user: params[:user],user_id: params[:user][:id],category_id: "#{params[:category].to_i}", content: "#{params[:user][:first_name]} has left the #{params[:room]} room", event_type: "exit", status: 'offline'})
+    ActionCable.server.broadcast("chat_#{params[:room]}", { date: Time.now+ Time.zone_offset('EST'), user: params[:user],user_id: params[:user][:id],category_id: "#{params[:category].to_i}", content: "#{params[:user][:first_name]} has left the #{params[:room]} room", event_type: "exit", status: 'offline'})
    
   end
 

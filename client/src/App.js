@@ -7,15 +7,11 @@ import NavBar from "./NavBar";
 // import ChatRoom from "./Chatroom";
 import SignUp from "./Signup";
 import { createConsumer } from "@rails/actioncable"
-import { ActionCableProvider } from "./actioncable";
-import { ChatProvider } from "./chatContext";
-import { ReactProvider, useChatR, useUpdateR } from "./ReactJSContext";
+
+
 import { UserContext } from './ReactJSContext';
 import ChatRoom from "./Chatroom";
 import { LiveUserContext } from "./LiveUsers";
-
-import { Provider } from "react-redux";
-import { useContext } from "react";
 import ActiveUsers from "./ActiveUsers";
 import Home from "./Home";
 const consumer = createConsumer()
